@@ -74,7 +74,6 @@ class KMeansClustering:
     
     # Output data
     objFunc = []
-    clusterMaps = []
     
     # rawData must be an array with float parameters and one label entry (str or int)
     def __init__(self, rawData:IrisData, k = 3, maxItr = 1000):
@@ -115,6 +114,7 @@ class KMeansClustering:
     def initialize(self):
         self.prepareData()
         self.clusters.clear()
+        self.objFunc.clear()
         
         # Create k random clusters
         for _ in range(self.k):
@@ -140,18 +140,18 @@ class KMeansClustering:
     def run(self):
         self.initialize()
         
-        for _ in range(self.maxItr):
+        for iter in range(self.maxItr):
             self.iterate()
             
             # Record data
             self.objFunc.append(self.objectiveFunction())
-            # self.clusterMaps.append(self.plotClusters())
+            self.plotClusters(iter + 1)
             
             # Check end condition
             if len(self.objFunc) >= 2 and self.objFunc[-1] == self.objFunc[-2]:
                 break
         
-    def plotClusters(self):
+    def plotClusters(self, iterNum = -1):
         # Get the colors
         colors = sorted(mcolors.TABLEAU_COLORS, key=lambda c: tuple(mcolors.rgb_to_hsv(mcolors.to_rgb(c))))
         colors = list(reversed(colors))
@@ -166,6 +166,6 @@ class KMeansClustering:
         
         ax.set_xlabel('Sepal Length')
         ax.set_ylabel('Petal Length')
-        ax.set_title('Petal Length vs. Sepal Length with Colored Clusters')
+        ax.set_title('Petal Length vs. Sepal Length with Colored Clusters' + (f": Iteration {iterNum}" if iterNum != -1 else ""))
         
         return fig
