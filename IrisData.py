@@ -1,5 +1,3 @@
-import numpy as np
-
 # Class to import, parse, and access data from the Iris dataset
 class IrisData:
     
