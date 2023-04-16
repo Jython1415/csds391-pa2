@@ -35,3 +35,11 @@ $$ D = \sum_{n=1}^N\sum{k=1}^N{r_{n,k} || x_n - \mu_k ||^2} $$
 (D) Show how the gradient can be written in both scalar and vector form.
 
 (E) Write code that computes the summed gradient for an ensemble of patterns. Illustrate the gradient by showing how the decision boundary changes for a small step.
+
+## Work Log
+
+1. Set up the project
+
+    I created the basic file structure, created empty files, and read through the instructions.
+
+2. Figure out what to do
