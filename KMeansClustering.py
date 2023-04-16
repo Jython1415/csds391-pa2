@@ -1,39 +1,9 @@
 import math
 import random
 from statistics import mean
-from IrisData import IrisData
+from IrisData import *
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
-
-class DataEntry:
-    
-    def __init__(self, params, label):
-        
-        if type(params) == list:
-            self.params = tuple(params)
-        elif type(params) == tuple:
-            self.params = params
-        else:
-            raise Exception(f"\"params\" parameter must be either a tuple or a list. {type(params)} is not allowed.")
-        
-        self.label = label
-        
-    def getParams(self):
-        return self.params
-    
-    def getLabel(self):
-        return self.label
-    
-    def getEntry(self):
-        return (self.params, self.label)
-    
-class Dataset:
-    
-    def __init__(self, listOfEntries):
-        self.data = listOfEntries
-    
-    def getPoints(self):
-        return [entry.getParams() for entry in self.data]
    
 class Cluster:
     
@@ -79,27 +49,7 @@ class KMeansClustering:
     def __init__(self, rawData:IrisData, k = 3, maxItr = 1000):
         self.k = k
         self.maxItr = maxItr
-        self.rawData = rawData.getData().copy()
-        
-    def prepareData(self):
-        
-        paramIndices = []
-        labelIndex = -1   # Stores where the label is in the raw data
-        data = []
-        
-        for index, entry in enumerate(self.rawData[0]):
-            if type(entry) == float:
-                paramIndices.append(index)
-            elif type(entry) == str or type(entry) == int:
-                if labelIndex == -1:
-                    labelIndex = index
-                else:
-                    raise Exception(f"rawData has more than one label: {labelIndex} and {index}")
-        
-        for row in self.rawData:
-            data.append(DataEntry([row[i] for i in paramIndices], row[labelIndex]))
-    
-        self.data = Dataset(data)
+        self.data = rawData.getData()
         
     def objectiveFunction(self):
         total = 0 # Holds the sum of the objective function
@@ -112,7 +62,6 @@ class KMeansClustering:
         return total
     
     def initialize(self):
-        self.prepareData()
         self.clusters.clear()
         self.objFunc.clear()
         
