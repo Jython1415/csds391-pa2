@@ -51,3 +51,5 @@ $$ D = \sum_{n=1}^N\sum{k=1}^N{r_{n,k} || x_n - \mu_k ||^2} $$
     I created a class (IrisData) that reads the data in the "iris.data" file and parses it. It stores the data in a 2D array.
 
 4. Review the k-means clustering algorithm so that I can implement it.
+
+    Still WIP as of 04-15-2023. I am also consulting [Rohan's work](https://github.com/Rohan-s18/Artificial_Intelligence/tree/main/AI-based%20implementations/Iris%20classification) as reference material.
