@@ -46,9 +46,9 @@ See figures below for the convergence when $ k = 2 $
 
 ### Neural Networks
 
-(A) Write a program to calculate the MSE of the data for a simple one-layer neural network using a sigmoid non-linearity.
+(A) Write a program to calculate the MSE of the data for a simple one-layer neural network using a sigmoid non-linearity. The function should take 3 arguments: the data vectors, the parameters defining the neural network, and the pattern classes.
 
-(B) Compute the MSE for two different settings of the weights. Hand-select these weights to give large and small errors. Plot both boundaries on the dataset.
+(B) Compute the MSE for two different settings of the weights. Hand-select these weights to give large and small errors. Plot both boundaries on the dataset. Only use the 2nd and 3rd iris classes.
 
 (C) Give a mathematical derivation of the gradient of the objective function with respect to the weights. Use $ w_0 $ to represent the bias term. Show and explain each step.
 
@@ -87,3 +87,11 @@ See figures below for the convergence when $ k = 2 $
     Done. I will have to save part D for another time.
 
 8. Figure out what to do for Neural Networks
+
+    I worked with my peers who have started with on this section to figure out what I need to do. I realized that I need to convert the labels to integers so that I can calculate the MSE. After that, I will need to set up the class to construct and perform operations on the neural network.
+
+9. Rework the Iris data class for the neural network
+
+    Done. I converted the labels to integers and made a few changes so to the k-means code as well.
+
+10. Set up architecture of the neural network
