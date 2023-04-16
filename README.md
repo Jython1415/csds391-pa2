@@ -55,3 +55,7 @@ $$ D = \sum_{n=1}^N\sum_{k=1}^N{r_{n,k} || x_n - \mu_k ||^2} $$
     Still WIP as of 04-15-2023. I am also consulting [Rohan's work](https://github.com/Rohan-s18/Artificial_Intelligence/tree/main/AI-based%20implementations/Iris%20classification) as reference material.
 
 5. Outline the class that will do k-means clustering
+
+    I added a basic outline with the objective function, and cluster updates. The class still doesn't have a stopping mechanism except for the maxIter parameter, but I'm going to move ahead with visualization so that I can see where my code is at.
+
+6. Add visualization of k-means
