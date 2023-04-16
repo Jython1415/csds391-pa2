@@ -1,7 +1,16 @@
+class Dataset:
+    
+    def __init__(self, listOfEntries):
+        self.data = listOfEntries
+    
+    def getPoints(self):
+        return [entry.getParams() for entry in self.data]
+    
 # Class to import, parse, and access data from the Iris dataset
 class IrisData:
     
     data = []
+    dataset = None
     
     def __init__(self):
         self.importData()
@@ -13,9 +22,52 @@ class IrisData:
         for i, line in enumerate(lines):
             self.data[i].append(line.split(",")[4])
 
-    def getData(self):
-        return self.data
+    def getData(self) -> Dataset:
+    
+        paramIndices = []
+        labelIndex = -1   # Stores where the label is in the raw data
+        data = []
+        
+        for index, entry in enumerate(self.data[0]):
+            if type(entry) == float:
+                paramIndices.append(index)
+            elif type(entry) == str or type(entry) == int:
+                if labelIndex == -1:
+                    labelIndex = index
+                else:
+                    raise Exception(f"data has more than one label: {labelIndex} and {index}")
+        
+        for row in self.data:
+            data.append(DataEntry([row[i] for i in paramIndices], row[labelIndex]))
+    
+        self.dataset = Dataset(data)
+        return self.dataset
     
     def __str__(self):
-        lines = [f"{line[0]}, {line[1]}, {line[2]}, {line[3]}, {line[4]}" for line in self.getData()]
+        lines = [", ".join(line) for line in self.getData()]
         return "\n".join(lines)
+    
+class DataEntry:
+    
+    def __init__(self, params, label, labelMapping = {"Iris-setosa": 0, "Iris-versicolor": 1, "Iris-virginica": 2}):
+        
+        if type(params) == list:
+            self.params = tuple(params)
+        elif type(params) == tuple:
+            self.params = params
+        else:
+            raise Exception(f"\"params\" parameter must be either a tuple or a list. {type(params)} is not allowed.")
+        
+        if label in labelMapping:
+            self.label = labelMapping[label]
+        else:
+            raise Exception(f"label {label} could not be found in the label mapping: {labelMapping.keys()}")
+        
+    def getParams(self):
+        return self.params
+    
+    def getLabel(self):
+        return self.label
+    
+    def getEntry(self):
+        return (self.params, self.label)
