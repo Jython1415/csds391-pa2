@@ -43,3 +43,11 @@ $$ D = \sum_{n=1}^N\sum{k=1}^N{r_{n,k} || x_n - \mu_k ||^2} $$
     I created the basic file structure, created empty files, and read through the instructions.
 
 2. Figure out what to do
+
+    I re-read the instructions and consulted my friends who have started the project.
+
+3. Import and parse the data
+
+    I created a class (IrisData) that reads the data in the "iris.data" file and parses it. It stores the data in a 2D array.
+
+4. Review the k-means clustering algorithm so that I can implement it.
