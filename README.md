@@ -16,11 +16,31 @@ Text here.
 
 (A) Implement k-mean clustering with the objective function and learning rule from WA4-Q1.
 
+Done. See the code in "KMeansClustering.py"
+
 (B) Plot the value of the objective function as a function of the iteration to show that the learning rule and implementation minimizes the following expression.
 
 $$ D = \sum_{n=1}^N\sum_{k=1}^N{r_{n,k} || x_n - \mu_k ||^2} $$
 
+![Figure demonstrating how the objective function decreases each iteration.](figures/obj-func-decreasing.png)
+
 (C) Plot the results of the learning process by showing the initial, intermediate, and converged cluster centers overlaid on the data for $ k = 2 $ and $ k = 3 $.
+
+See figures below for the convergence when $ k = 3 $
+
+![k=3,iter=1](figures/k3-i1.png)
+
+![k=3,iter=5](figures/k3-i5.png)
+
+![k=3,iter=11](figures/k3-i11.png)
+
+See figures below for the convergence when $ k = 2 $
+
+![k=2,iter=1](figures/k2-i1.png)
+
+![k=2,iter=2](figures/k2-i2.png)
+
+![k=2,iter=4](figures/k2-i4.png)
 
 (D) Devise a method to plot the decision boundaries for the dataset using the optimized parameters.
 
@@ -59,3 +79,11 @@ $$ D = \sum_{n=1}^N\sum_{k=1}^N{r_{n,k} || x_n - \mu_k ||^2} $$
     I added a basic outline with the objective function, and cluster updates. The class still doesn't have a stopping mechanism except for the maxIter parameter, but I'm going to move ahead with visualization so that I can see where my code is at.
 
 6. Add visualization of k-means
+
+    I added visualization of the objection function decreasing and a scatter plot of the clusters. Using this, I was able to debug the code.
+
+7. Add what I can to the write up for k-means
+
+    Done. I will have to save part D for another time.
+
+8. Figure out what to do for Neural Networks
