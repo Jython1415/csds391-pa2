@@ -1,4 +1,6 @@
 import math
+import random
+from statistics import mean
 
 class DataEntry:
     
@@ -33,7 +35,14 @@ class Dataset:
 class Cluster:
     
     def __init__(self, centroid = None):
-        self.centroid = centroid
+        
+        if type(centroid) == tuple:
+            self.centroid = centroid
+        elif type(centroid) == list:
+            self.centroid = tuple(centroid)
+        else:
+            raise Exception(f"\"centroid\" parameter must be either a tuple or a list. {type(centroid)} is not allowed.")
+        
         self.points = []
     
     def setCentroid(self, newCentroid):
@@ -48,10 +57,17 @@ class Cluster:
     def clearPoints(self):
         self.points.clear()
         
+    def getPoints(self):
+        return self.points
+    
+    def findCentroid(self):
+        self.setCentroid(tuple([mean(column) for column in zip(*self.getPoints())]))
+        
+        
 class KMeansClustering:
     
-    data:Dataset = None
-    clusters:list[Cluster] = []
+    data:Dataset = None         # Stores the data (points and labels)
+    clusters:list[Cluster] = [] # Stores the k clusters
     
     # rawData must be an array with float parameters and one label entry (str or int)
     def __init__(self, rawData, k = 3, maxItr = 1000):
@@ -88,5 +104,32 @@ class KMeansClustering:
             total += min([math.dist(cluster.getCentroid(), point) ** 2 for cluster in self.clusters])
         
         return total
+    
+    def initialize(self):
+        self.prepareData()
+        
+        # Create k random clusters
+        for _ in range(self.k):
+            randomPosition = []
+            for i in range(len(self.data.getPoints()[0])):
+                allPoints = [point[i] for point in self.data.getPoints()]
+                randomPosition.append(random.uniform(min(allPoints), max(allPoints)))
+            self.clusters.append(Cluster(randomPosition))
+    
+    def iterate(self):
+        # Assign points to clusters
+        map(Cluster.clearPoints(), self.clusters)
+        for point in self.data.getPoints():
+            distances = [math.dist(cluster.getCentroid(), point) ** 2 for cluster in self.clusters]
+            self.clusters[distances.index(min(distances))].addPoint(point)
+        
+        # Find new centroid for each cluster
+        map(Cluster.findCentroid(), self.clusters)
+    
+    def run(self):
+        self.initialize()
+        
+        for iter in range(self.maxItr):
+            self.iterate()
         
         
