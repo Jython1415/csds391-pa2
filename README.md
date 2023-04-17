@@ -52,8 +52,10 @@ See the NeuralNetwork class and Training.MSE function in NeuralNetwork.py. The f
 
 (B) Compute the MSE for two different settings of the weights. Hand-select these weights to give large and small errors. Plot both boundaries on the dataset. Only use the 2nd and 3rd iris classes.
 
-With all weights set to 0.0 (and bias set to 0.0), the MSE is 0.9167
-With all weights set to 0.9 (and bias set to 0.0), the MSE is 0.6666
+With all weights set to 0.0 (and bias set to 0.0), the MSE is 0.2500
+With all weights set to 0.9 (and bias set to 0.0), the MSE is 0.5000
+
+**Still have to add boundaries**
 
 (C) Give a mathematical derivation of the gradient of the objective function with respect to the weights. Use $ w_0 $ to represent the bias term. Show and explain each step.
 
@@ -103,4 +105,8 @@ With all weights set to 0.9 (and bias set to 0.0), the MSE is 0.6666
 
     I set up the neural network and the calculation of MSE, but this does not include any training of the network. However, doing the MSE step allowed me to answer 2.A and 2.B.
 
-11. Derive the answer to 2.C
+11. Remove class one from the neural network data
+
+    Done. This gave me better answers for 2.B
+
+12. Derive the answers for 2.C and 2.D
