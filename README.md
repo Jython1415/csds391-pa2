@@ -57,9 +57,35 @@ With all weights set to 0.9 (and bias set to 0.0), the MSE is 0.5000
 
 **Still have to add boundaries**
 
-(C) Give a mathematical derivation of the gradient of the objective function with respect to the weights. Use $ w_0 $ to represent the bias term. Show and explain each step.
+(C) and (D) Give a mathematical derivation of the gradient of the objective function with respect to the weights. Use $ w_0 $ to represent the bias term. Show and explain each step. Show how the gradient can be written in both scalar and vector form.
 
-(D) Show how the gradient can be written in both scalar and vector form.
+The objection function can be written mathematically
+
+$$ E = \frac{1}{N}\sum^N_{i=1}(y_i - \hat{y}_i)^2 $$
+
+In this simple neural network, $ \hat{y}_i $ is given by the following expression:
+
+$$ \hat{y}_i = \sigma(w_0 + \mathbf{w}\cdot\mathbf{x}) $$
+
+Where $ w_0 $ is the bias term, $ \mathbf{w} $ is the weights from the input layer to the output layer, $ \mathbf{x} $ is the parameter vector, and $ \sigma(z) = \frac{1}{1 + e^{-z}} $. Note that the derivative of the sigmoid function is $ \sigma(z)(1-\sigma(z)) $.
+
+We are solving for the gradient which can be found by evaluating $ \frac{\delta E}{\delta \mathbf{w}} $
+
+$$ \frac{\delta E}{\delta \mathbf{w}} = \frac{\delta E}{\delta z} \cdot \frac{\delta z}{\delta \mathbf{w}} $$
+
+This allows us to simplify the math as we can solve for the two parts separately.
+
+$$ \frac{\delta E}{\delta z} = \frac{\delta}{\delta z}(\frac{1}{N}\sum^N_{i=1}(y_i - \hat{y}_i)^2) = -\frac{2}{N}\sum^N_{i=1}(y_i - \sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))\sigma(w_0 + \mathbf{w}\cdot\mathbf{x})(1-\sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))$$
+
+$$ \frac{\delta z}{\delta \mathbf{w}} = \frac{\delta}{\delta \mathbf{w}}(w_0 + \mathbf{w}\cdot\mathbf{x}) = \mathbf{x} $$
+
+Of course, $ \frac{\delta z}{\delta w_0} $ is the exception as it equals 1. We can combine the partial derivatives above to get the gradient.
+
+$$ \frac{\delta E}{\delta \mathbf{w}} = -\frac{2}{N}\sum^N_{i=1}(y_i - \sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))\sigma(w_0 + \mathbf{w}\cdot\mathbf{x})(1-\sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))\mathbf{x}_i $$
+
+In scalar form it is:
+
+$$ \frac{\delta E}{\delta \mathbf{w}_j} = -\frac{2}{N}\sum^N_{i=1}(y_i - \sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))\sigma(w_0 + \mathbf{w}\cdot\mathbf{x})(1-\sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))\mathbf{x}_{i,j} $$
 
 (E) Write code that computes the summed gradient for an ensemble of patterns. Illustrate the gradient by showing how the decision boundary changes for a small step.
 
@@ -110,3 +136,7 @@ With all weights set to 0.9 (and bias set to 0.0), the MSE is 0.5000
     Done. This gave me better answers for 2.B
 
 12. Derive the answers for 2.C and 2.D
+
+    I tried my best on both of these. I think they're correct, but I'll find out when I try 2.E I suppose.
+
+13. Try implementing the math in 2.C and 2.D for 2.E
