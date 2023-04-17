@@ -1,6 +1,7 @@
 import numpy as np
 import math
 from statistics import mean
+from matplotlib import pyplot as plt
 
 class NeuralNetwork:
     
@@ -8,7 +9,7 @@ class NeuralNetwork:
         self.inputSize = inputSize
         
         if type(weights) != np.ndarray:
-            self.weights = np.zeros(self.inputSize)
+            self.weights = np.asarray([-3.0, -2.1, 4.5, 3.8])
         elif weights.shape == np.zeros((self.inputSize)).shape:
             self.weights = weights.copy()
         else:
@@ -38,5 +39,44 @@ class Training:
     @staticmethod
     def MSE(data, neuralNetwork:NeuralNetwork, expectedValues):
         errors = [(expectedValues[i] - neuralNetwork.predict(paramSet)) ** 2 for i, paramSet in enumerate(data)]
-        
         return mean(errors)
+
+    @staticmethod
+    def gradient(data, neuralNetwork:NeuralNetwork, expectedValues):
+        gradient = []
+        for i in range(len(data[0])):
+            sum = 0
+            for j, paramSet in enumerate(data):
+                prediction = neuralNetwork.predict(paramSet)
+                sum += (expectedValues[j] - prediction) * prediction * (1 - prediction) * paramSet[i]
+            gradient.append(-2 * sum / len(data))
+        
+        return np.asarray(gradient)
+    
+    def train(data, neuralNetwork:NeuralNetwork, expectedValues, maxItr = 10):
+        
+        MSERecords = []
+        for itr in range(maxItr):
+            gradient = Training.gradient(data, neuralNetwork, expectedValues)
+            neuralNetwork.weights -= gradient
+            if itr % (maxItr/50) == 0:
+                MSE = Training.MSE(data, neuralNetwork, expectedValues)
+                print(f"{itr} --- {[round(i, 4) for i in gradient]} --- {round(MSE, 4)} --- {neuralNetwork.weights}")
+                MSERecords.append((itr, MSE))
+        
+        return MSERecords
+
+    @staticmethod
+    def plotClassification(data, neuralNetwork:NeuralNetwork):
+        classifications = [neuralNetwork.predict(paramSet) for paramSet in data]
+        classifications = [1 if prediction > .5 else 0 for prediction in classifications]
+        
+        _, ax = plt.subplots()
+        colors = {0: "r", 1: "b"}
+        for i, paramSet in enumerate(data):
+            ax.scatter(paramSet[2], paramSet[3], color=colors[classifications[i]])
+        
+        ax.set_xlabel('Petal Length')
+        ax.set_ylabel('Petal Width')
+        ax.set_title('Petal Length vs Width with Classifications by the Neural Network')
+            
