@@ -44,6 +44,16 @@ See figures below for the convergence when $ k = 2 $
 
 (D) Devise a method to plot the decision boundaries for the dataset using the optimized parameters.
 
+My idea for plotting the decision boundaries was to categorize a grid of points, and then to display those. This was from one of my peers (Rithvik) who tried this first. The idea is that by categorizing every point on the window, you can see how any points would be categorized by the particular clusters the algorithm has fallen into. This works equally well for any value of $ k $ because the plotting method does not change. I have included some figures below that demonstrate how this works for various values of $ k $.
+
+![figures/1d-k2.png](figures/1d-k2.png)
+
+![figures/1d-k3.png](figures/1d-k3.png)
+
+![figures/1d-k4.png](figures/1d-k4.png)
+
+![figures/1d-k5.png](figures/1d-k5.png)
+
 ### Neural Networks
 
 (A) Write a program to calculate the MSE of the data for a simple one-layer neural network using a sigmoid non-linearity. The function should take 3 arguments: the data vectors, the parameters defining the neural network, and the pattern classes.
@@ -169,3 +179,7 @@ See the two figures below. The first is the starting classification boundaries. 
     Done. It doesn't have a line as the boundary, but I'm going to have to leave it at that for now.
 
 15. Plots for 2.E
+
+    Done.
+
+16. 1.D
