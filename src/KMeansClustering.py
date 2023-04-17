@@ -4,6 +4,7 @@ from statistics import mean
 from src.IrisData import *
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
+import numpy as np
    
 class Cluster:
     
@@ -54,10 +55,16 @@ class KMeansClustering:
     def objectiveFunction(self):
         total = 0 # Holds the sum of the objective function
         
+        for cluster in self.clusters:
+            cluster.findCentroid()
+        
         # Iterate over all the points
         for point in self.data.getPoints():
             # Add the distance to the closest centroid
-            total += min([math.dist(cluster.getCentroid(), point) ** 2 for cluster in self.clusters])
+            try:
+                total += min([math.dist(cluster.getCentroid(), point) ** 2 for cluster in self.clusters])
+            except:
+                raise Exception("\n".join([f"{len(cluster.getCentroid())}, {len(point)}" for cluster in self.clusters]))
         
         return total
     
@@ -86,7 +93,7 @@ class KMeansClustering:
         for cluster in self.clusters:
             cluster.findCentroid()
     
-    def run(self):
+    def run(self, withFigure = True):
         self.initialize()
         
         for iter in range(self.maxItr):
@@ -94,13 +101,14 @@ class KMeansClustering:
             
             # Record data
             self.objFunc.append(self.objectiveFunction())
-            self.plotClusters(iter + 1)
+            if withFigure:
+                self.plotClusters(iter + 1)
             
             # Check end condition
             if len(self.objFunc) >= 2 and self.objFunc[-1] == self.objFunc[-2]:
                 break
         
-    def plotClusters(self, iterNum = -1):
+    def plotClusters(self, iterNum = -1, shading = False):
         # Get the colors
         colors = sorted(mcolors.TABLEAU_COLORS, key=lambda c: tuple(mcolors.rgb_to_hsv(mcolors.to_rgb(c))))
         colors = list(reversed(colors))
@@ -109,9 +117,24 @@ class KMeansClustering:
         
         # Plot the values
         fig, ax = plt.subplots()
-        for i, cluster in enumerate(self.clusters):
-            ax.scatter([point[2] for point in cluster.getPoints()], [point[3] for point in cluster.getPoints()], s=10, color=colors[i])
-            ax.scatter(cluster.getCentroid()[2], cluster.getCentroid()[3], s=30, color='r', alpha=.5)
+        if not shading:
+            for i, cluster in enumerate(self.clusters):
+                ax.scatter([point[2] for point in cluster.getPoints()], [point[3] for point in cluster.getPoints()], s=10, color=colors[i])
+                ax.scatter(cluster.getCentroid()[2], cluster.getCentroid()[3], s=30, color='r', alpha=.5)
+        else:
+            columns = list(zip(*self.data.getPoints()))
+            x = columns[2]
+            y = columns[3]
+            numDots = 55
+            
+            xSpread = np.linspace(min(x), max(x), numDots)
+            ySpread = np.linspace(min(y), max(y), numDots)
+            
+            for xVal in xSpread:
+                for yVal in ySpread:
+                    distances = [math.dist(cluster.getCentroid()[2:], (xVal, yVal)) ** 2 for cluster in self.clusters]
+                    i = distances.index(min(distances))
+                    ax.scatter(xVal, yVal, color=colors[i])
         
         ax.set_xlabel('Petal Length')
         ax.set_ylabel('Petal Width')
