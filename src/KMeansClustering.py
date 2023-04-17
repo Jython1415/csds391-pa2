@@ -113,8 +113,8 @@ class KMeansClustering:
             ax.scatter([point[2] for point in cluster.getPoints()], [point[3] for point in cluster.getPoints()], s=10, color=colors[i])
             ax.scatter(cluster.getCentroid()[2], cluster.getCentroid()[3], s=30, color='r', alpha=.5)
         
-        ax.set_xlabel('Sepal Length')
-        ax.set_ylabel('Petal Length')
-        ax.set_title('Petal Length vs. Sepal Length with Colored Clusters' + (f": Iteration {iterNum}" if iterNum != -1 else ""))
+        ax.set_xlabel('Petal Length')
+        ax.set_ylabel('Petal Width')
+        ax.set_title('Petal Length vs Width with Colored Clusters' + (f": Iteration {iterNum}" if iterNum != -1 else ""))
         
         return fig
