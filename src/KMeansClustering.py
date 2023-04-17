@@ -6,6 +6,7 @@ import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import numpy as np
    
+# Class the represents a cluster with a centroid and the points associated with it
 class Cluster:
     
     def __init__(self, centroid = None):
@@ -34,6 +35,7 @@ class Cluster:
     def getPoints(self):
         return self.points
     
+    # Calculates the mean in each dimension
     def findCentroid(self):
         self.setCentroid(tuple([mean(column) for column in zip(*self.getPoints())]))
         
@@ -55,6 +57,7 @@ class KMeansClustering:
     def objectiveFunction(self):
         total = 0 # Holds the sum of the objective function
         
+        # Make sure the centroids are up-to-date
         for cluster in self.clusters:
             cluster.findCentroid()
         
@@ -77,17 +80,16 @@ class KMeansClustering:
             randomPosition = []
             for i in range(len(self.data.getPoints()[0])):
                 allPoints = [point[i] for point in self.data.getPoints()]
-                randomPosition.append(random.uniform(min(allPoints), max(allPoints)))
+                randomPosition.append(random.uniform(min(allPoints), max(allPoints))) # Something between the min and max
             self.clusters.append(Cluster(randomPosition))
     
     def iterate(self):
         # Assign points to clusters
         for cluster in self.clusters:
             cluster.clearPoints()
-        
         for point in self.data.getPoints():
-            distances = [math.dist(cluster.getCentroid(), point) ** 2 for cluster in self.clusters]
-            self.clusters[distances.index(min(distances))].addPoint(point)
+            distances = [math.dist(cluster.getCentroid(), point) ** 2 for cluster in self.clusters] # Calculate distances
+            self.clusters[distances.index(min(distances))].addPoint(point)                          # Select the cluster that is the closest
         
         # Find new centroid for each cluster
         for cluster in self.clusters:
@@ -108,6 +110,7 @@ class KMeansClustering:
             if len(self.objFunc) >= 2 and self.objFunc[-1] == self.objFunc[-2]:
                 break
         
+    # Plotting function for convenience
     def plotClusters(self, iterNum = -1, shading = False):
         # Get the colors
         colors = sorted(mcolors.TABLEAU_COLORS, key=lambda c: tuple(mcolors.rgb_to_hsv(mcolors.to_rgb(c))))

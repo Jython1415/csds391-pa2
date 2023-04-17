@@ -3,13 +3,14 @@ import math
 from statistics import mean
 from matplotlib import pyplot as plt
 
+# Represent a single-layer neural network. Since there are no hidden layers, the implementation is very simplistic.
 class NeuralNetwork:
     
     def __init__(self, inputSize = 4, weights:np.ndarray = None, bias = 0):
         self.inputSize = inputSize
         
         if type(weights) != np.ndarray:
-            self.weights = np.asarray([-3.0, -2.1, 4.5, 3.8])
+            self.weights = np.asarray([-3.0, -2.1, 4.5, 3.8]) # Default starting values that make the computations more convenient
         elif weights.shape == np.zeros((self.inputSize)).shape:
             self.weights = weights.copy()
         else:
@@ -22,13 +23,13 @@ class NeuralNetwork:
         return 1.0 / (1 + math.e ** (-value))
 
     def predict(self, x):
-        
+        # Check input
         if type(x) == tuple:
             x = np.asarray(x)
-        
         if x.shape != self.weights.shape:
             raise Exception(f"Shape must be ({self.inputSize}), not {x.shape}")
 
+        # Return prediction based on the weights
         return NeuralNetwork.sigmoid(np.dot(x, self.weights) + self.bias)
     
 class Training:
@@ -51,14 +52,20 @@ class Training:
                 sum += (expectedValues[j] - prediction) * prediction * (1 - prediction) * paramSet[i]
             gradient.append(-2 * sum / len(data))
         
-        return np.asarray(gradient)
+        sum = 0
+        for j, paramSet in enumerate(data):
+            prediction = neuralNetwork.predict(paramSet)
+            sum += (expectedValues[j] - prediction) * prediction * (1 - prediction)
+        
+        return (np.asarray(gradient), -2 * sum / len(data))
     
     def train(data, neuralNetwork:NeuralNetwork, expectedValues, maxItr = 10):
         
         MSERecords = []
         for itr in range(maxItr):
-            gradient = Training.gradient(data, neuralNetwork, expectedValues)
+            gradient, val = Training.gradient(data, neuralNetwork, expectedValues)
             neuralNetwork.weights -= gradient
+            neuralNetwork.bias -= val
             if itr % (maxItr/50) == 0:
                 MSE = Training.MSE(data, neuralNetwork, expectedValues)
                 print(f"{itr} --- {[round(i, 4) for i in gradient]} --- {round(MSE, 4)} --- {neuralNetwork.weights}")
