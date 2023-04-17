@@ -48,7 +48,12 @@ See figures below for the convergence when $ k = 2 $
 
 (A) Write a program to calculate the MSE of the data for a simple one-layer neural network using a sigmoid non-linearity. The function should take 3 arguments: the data vectors, the parameters defining the neural network, and the pattern classes.
 
+See the NeuralNetwork class and Training.MSE function in NeuralNetwork.py. The functionality of these functions is demonstrated in their use to answer the questions below.
+
 (B) Compute the MSE for two different settings of the weights. Hand-select these weights to give large and small errors. Plot both boundaries on the dataset. Only use the 2nd and 3rd iris classes.
+
+With all weights set to 0.0 (and bias set to 0.0), the MSE is 0.9167
+With all weights set to 0.9 (and bias set to 0.0), the MSE is 0.6666
 
 (C) Give a mathematical derivation of the gradient of the objective function with respect to the weights. Use $ w_0 $ to represent the bias term. Show and explain each step.
 
@@ -95,3 +100,7 @@ See figures below for the convergence when $ k = 2 $
     Done. I converted the labels to integers and made a few changes so to the k-means code as well.
 
 10. Set up architecture of the neural network
+
+    I set up the neural network and the calculation of MSE, but this does not include any training of the network. However, doing the MSE step allowed me to answer 2.A and 2.B.
+
+11. Derive the answer to 2.C
