@@ -4,13 +4,17 @@ Repository for PA2 of CSDS391 (AI)
 
 ## Set up instructions
 
-1. Text here.
+1. Load main.ipynb in a Jupyter Notebook environment.
+2. Ensure the Python interpreter is the virtual environment included in this project submission.
+
+    Alternatively, make sure the following libraries are installed:
+
+    - matplotlib
+    - numpy
+
+3. Start main.ipynb through Jupyter
 
 ## Write-up
-
-### Code Design
-
-Text here.
 
 ### Clustering
 
@@ -183,3 +187,7 @@ See the two figures below. The first is the starting classification boundaries. 
     Done.
 
 16. 1.D
+
+    Done.
+
+17. Polish and submit
