@@ -52,10 +52,21 @@ See the NeuralNetwork class and Training.MSE function in NeuralNetwork.py. The f
 
 (B) Compute the MSE for two different settings of the weights. Hand-select these weights to give large and small errors. Plot both boundaries on the dataset. Only use the 2nd and 3rd iris classes.
 
-With all weights set to 0.0 (and bias set to 0.0), the MSE is 0.2500
-With all weights set to 0.9 (and bias set to 0.0), the MSE is 0.5000
+#### Low MSE
 
-**Still have to add boundaries**
+Weights: [-4.12, -3.91, 5.61, 5.76]
+
+MSE = 0.03386
+
+![figures/2b-good.png](figures/2b-good.png)
+
+#### High MSE
+
+Weights: [0.076, -0.078, 1.10, 0.73]
+
+MSE = 0.496559
+
+![figures/2b-bad.png](figures/2b-bad.png)
 
 (C) and (D) Give a mathematical derivation of the gradient of the objective function with respect to the weights. Use $ w_0 $ to represent the bias term. Show and explain each step. Show how the gradient can be written in both scalar and vector form.
 
@@ -85,9 +96,19 @@ $$ \frac{\delta E}{\delta \mathbf{w}} = -\frac{2}{N}\sum^N_{i=1}(y_i - \sigma(w_
 
 In scalar form it is:
 
-$$ \frac{\delta E}{\delta \mathbf{w}_j} = -\frac{2}{N}\sum^N_{i=1}(y_i - \sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))\sigma(w_0 + \mathbf{w}\cdot\mathbf{x})(1-\sigma(w_0 + \mathbf{w}\cdot\mathbf{x}))\mathbf{x}_{i,j} $$
+$$ \frac{\delta E}{\delta \mathbf{w}_j} = -\frac{2}{N}\sum^N_{i=1}(y_i - \sigma(w_0 + \mathbf{w}\cdot\mathbf{x}_i))\sigma(w_0 + \mathbf{w}\cdot\mathbf{x}_i)(1-\sigma(w_0 + \mathbf{w}\cdot\mathbf{x}_i))\mathbf{x}_{i,j} $$
 
 (E) Write code that computes the summed gradient for an ensemble of patterns. Illustrate the gradient by showing how the decision boundary changes for a small step.
+
+See figure for how the MSE changes.
+
+![figures/2e-decreasing-mse.png](figures/2e-decreasing-mse.png)
+
+See the two figures below. The first is the starting classification boundaries. The second is the final classification boundary. The final figure it a classification boundary from an iteration that is closer to the final classification boundary.
+
+![figures/2e-start.png](figures/2e-start.png)
+![figures/2e-end.png](figures/2e-end.png)
+![figures/2e-close.png](figures/2e-close.png)
 
 ## Work Log
 
@@ -140,3 +161,11 @@ $$ \frac{\delta E}{\delta \mathbf{w}_j} = -\frac{2}{N}\sum^N_{i=1}(y_i - \sigma(
     I tried my best on both of these. I think they're correct, but I'll find out when I try 2.E I suppose.
 
 13. Try implementing the math in 2.C and 2.D for 2.E
+
+    Done. It's not perfect but it works. On to the next thing.
+
+14. Plots for 2.B
+
+    Done. It doesn't have a line as the boundary, but I'm going to have to leave it at that for now.
+
+15. Plots for 2.E
