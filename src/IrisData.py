@@ -2,12 +2,32 @@ class Dataset:
     
     def __init__(self, listOfEntries):
         self.data = listOfEntries
+        self.savedData = []
     
     def getPoints(self):
         return [entry.getParams() for entry in self.data]
     
     def getLabels(self):
         return [entry.getLabel() for entry in self.data]
+    
+    def switchToNeuralNetwork(self):
+        self.savedData.clear()
+        
+        toRemove = []
+        for i, entry in enumerate(self.data):
+            if entry.label == 0:
+                toRemove.append(i)
+        for index in reversed(toRemove):
+            self.savedData.append(self.data.pop(index))
+        for entry in self.data:
+            entry.label -= 1
+    
+    def switchToKMean(self):
+        for entry in self.data:
+            entry.label += 1
+        self.data.extend(self.savedData)
+        self.savedData.clear()
+                
     
 # Class to import, parse, and access data from the Iris dataset
 class IrisData:
